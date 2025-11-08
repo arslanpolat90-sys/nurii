@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Арс — портфолио</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --glass: rgba(255,255,255,0.08);
+    --glass-2: rgba(255,255,255,0.06);
+    --accent: rgba(255,255,255,0.9);
+    --muted: rgba(255,255,255,0.75);
+    --radius: 14px;
+    --blur: 10px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    color:var(--accent);
+    min-height:100vh;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+    background-attachment: fixed;
+  }
+
+  .hero {
+    position:relative;
+    min-height:60vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+    overflow:hidden;
+  }
+  .bg-image {
+    position:absolute;
+    inset:0;
+    background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80');
+    background-size:cover;
+    background-position:center;
+    transform:scale(1.06);
+    filter:contrast(1.05) saturate(1.05);
+    will-change:transform;
+    transition: transform 12s linear;
+  }
+  .bg-image.animate { transform: scale(1.12) rotate(0.02turn); }
+  .bg-overlay{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(135deg, rgba(10,16,32,0.4), rgba(34,6,44,0.35));
+  }
+
+  .float {
+    position:absolute;
+    width:300px;height:300px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 40%);
+    filter: blur(40px);
+    mix-blend-mode: screen;
+    opacity:0.7;
+    animation: float 12s ease-in-out infinite;
+  }
+  .float.x1{ left: -5%; top: 10%; animation-duration: 14s; }
+  .float.x2{ right: -8%; bottom: -10%; animation-duration: 18s; }
+  @keyframes float {
+    0%{ transform: translateY(0) translateX(0) rotate(0); }
+    50%{ transform: translateY(-30px) translateX(20px) rotate(6deg); }
+    100%{ transform: translateY(0) translateX(0) rotate(0); }
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    border-radius:var(--radius);
+    padding:22px;
+    backdrop-filter: blur(var(--blur));
+    box-shadow: 0 6px 30px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.06);
+    max-width:1100px;
+    width:100%;
+    position:relative;
+  }
+
+  .hero-content {
+    z-index:5;
+    text-align:center;
+    color:var(--accent);
+    max-width:900px;
+  }
+  .name {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight:700;
+    margin:0 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    margin:0 0 18px;
+    color:var(--muted);
+    font-weight:500;
+  }
+
+  .btn {
+    display:inline-block;
+    margin-top:12px;
+    padding:10px 18px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.12);
+    color:var(--accent);
+    text-decoration:none;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-weight:600;
+  }
+
+  main { padding:30px 20px 80px; max-width:1100px; margin: -60px auto 60px; }
+
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:20px;
+  }
+  @media (max-width:880px){ .grid{ grid-template-columns:1fr } .hero{min-height:52vh}}
+  section h2{
+    margin:0 0 10px;
+    font-size:18px;
+    color:var(--accent);
+  }
+  p.lead{ margin:0 0 8px; color:var(--muted) }
+
+  .abilities { display:flex; gap:12px; flex-wrap:wrap; }
+  .ability {
+    background:var(--glass);
+    padding:10px 12px;
+    border-radius:12px;
+    min-width:120px;
+    text-align:center;
+    font-weight:600;
+    font-size:14px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:12px; }
+  .media-card{
+    background:var(--glass-2);
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.04);
+  }
+  .media-thumb{
+    height:140px;
+    background-size:cover;
+    background-position:center;
+  }
+  .media-body { padding:10px; }
+  .media-body h3{ margin:0 0 6px; font-size:15px; color:var(--accent) }
+  .media-body p{ margin:0; color:var(--muted); font-size:13px }
+
+  footer {
+    text-align:center;
+    color:var(--muted);
+    margin-top:26px;
+    font-size:13px;
+  }
+
+  .pill {
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.03);
+    color:var(--muted);
+    font-size:13px;
+    margin-right:8px;
+  }
+
+  .media-card:hover{ transform: translateY(-6px); transition: transform .25s ease; box-shadow: 0 18px 40px rgba(0,0,0,0.55); }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="bg-image" id="bg"></div>
+  <div class="bg-overlay"></div>
+  <div class="float x1"></div>
+  <div class="float x2"></div>
+
+  <div class="card hero-content" role="banner">
+    <h1 class="name">Арс <small style="font-weight:500; color:var(--muted); font-size:14px;">(Арслан Полат)</small></h1>
+    <p class="subtitle">Разные способности • Музыка • Фильмы • Дизайн • Программирование — заходи, чтобы узнать обо мне больше</p>
+    <a class="btn" href="#about">Узнать больше</a>
+  </div>
+</section>
+
+<main>
+  <section id="about" class="card" style="margin-bottom:20px;">
+    <h2>Обо мне</h2>
+    <p class="lead">Привет! Я — Арс. Мне нравится веб-дизайн, 3D-моделирование, музыка и кино. Здесь собраны мои умения, любимые фильмы и треки, которые я рекомендую.</p>
+    <div style="margin-top:12px;">
+      <span class="pill">Креатив</span>
+      <span class="pill">Веб</span>
+      <span class="pill">Графика</span>
+      <span class="pill">3D</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Умения</h2>
+    <div class="abilities" style="margin-top:10px;">
+      <div class="ability">Веб-дизайн</div>
+      <div class="ability">Графический дизайн</div>
+      <div class="ability">Blender / 3D</div>
+      <div class="ability">AutoCAD</div>
+      <div class="ability">Программирование</div>
+      <div class="ability">Трейдинг (начальный)</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Фильмы</h2>
+    <div class="cards">
+      <div class="media-card">
+        <div class="media-thumb" style="background-image:url('https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=800&q=60');"></div>
+        <div class="media-body">
+          <h3>Трогательная драма</h3>
+          <p>Атмосферный фильм с сильной картинкой.</p>
+          <p style="margin-top:8px"><a href="https://www.youtube.com/watch?v=ScMzIvxBSi4" target="_blank" class="btn" style="padding:8px 12px; font-size:13px;">Смотреть трейлер</a></p>
+        </div>
+      </div>
+
+      <div class="media-card">
+        <div class="media-thumb" style="background-image:url('https://images.unsplash.com/photo-1504461923539-8b4d4b9f37b6?auto=format&fit=crop&w=800&q=60');"></div>
+        <div class="media-body">
+          <h3>Классика приключений</h3>
+          <p>Идеально для вечера с друзьями.</p>
+          <p style="margin-top:8px"><a href="https://www.youtube.com/watch?v=9GgW2tVpR2g" target="_blank" class="btn" style="padding:8px 12px; font-size:13px;">Смотреть трейлер</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Музыка</h2>
+    <div class="cards">
+      <div class="media-card">
+        <div class="media-thumb" style="background-image:url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=60');"></div>
+        <div class="media-body">
+          <h3>Chill трек</h3>
+          <p>Расслабляющий бит.</p>
+          <p style="margin-top:8px"><iframe width="100%" height="120" src="https://www.youtube.com/embed/5qap5aO4i9A" frameborder="0" allowfullscreen></iframe></p>
+        </div>
+      </div>
+
+      <div class="media-card">
+        <div class="media-thumb" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=60');"></div>
+        <div class="media-body">
+          <h3>Энергичный трек</h3>
+          <p>Подходит для мотивации.</p>
+          <p style="margin-top:8px"><iframe width="100%" height="120" src="https://www.youtube.com/embed/2Vv-BfVoq4g" frameborder="0" allowfullscreen></iframe></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Сделано с ❤ Арсом</p>
+    <div style="margin-top:10px;">
+      <a href="https://www.instagram.com/bo1atoov_017" target="_blank" 
+         style="margin:4px; padding:10px 16px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; text-decoration:none;">
+         🌐 Instagram
+      </a>
+      <a href="https://wa.me/87718844385" target="_blank" 
+         style="margin:4px; padding:10px 16px; border-radius:8px; background:rgba(37,211,102,0.2); color:white; text-decoration:none;">
+         💬 WhatsApp
+      </a>
+    </div>
+    <p style="margin-top:10px; color:rgba(255,255,255,0.6); font-size:13px;">
+      Свяжись со мной в Instagram или WhatsApp 👆
+    </p>
+  </footer>
+</main>
+
+<script>
+  const bg = document.getElementById('bg');
+  setInterval(() => {
+    bg.classList.toggle('animate');
+  }, 7000);
+</script>
+</body>
+</html>
